@@ -1,9 +1,12 @@
 # Usa una imagen base de NVIDIA con CUDA 11.6.1 y soporte de desarrollo
-FROM nvidia/cuda:11.6.1-devel-ubuntu20.04
+FROM nvidia/cuda:11.6.1-devel-ubuntu20.04 as cuda-base
 
 # Establece la variable de entorno para CUDA
 ENV PATH /usr/local/cuda/bin:$PATH
 ENV LD_LIBRARY_PATH /usr/local/cuda/lib64:$LD_LIBRARY_PATH
+
+# Establece la variable de entorno para evitar preguntas interactivas durante la instalación de paquetes
+ENV DEBIAN_FRONTEND=noninteractive
 
 # Instala dependencias básicas
 RUN apt-get update && apt-get install -y \
@@ -21,22 +24,16 @@ RUN apt-get update && apt-get install -y \
     libreadline-dev \
     libffi-dev \
     liblzma-dev \
-    libbz2-dev \
-    libffi-dev \
-    libncursesw5-dev \
-    libssl-dev \
     xz-utils \
     tk-dev \
     libxml2-dev \
     libxmlsec1-dev \
-    liblzma-dev \
-    libffi-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Install pyenv and Python 3.12.4
+# Instala pyenv y Python 3.12.4
 RUN curl https://pyenv.run | bash
 ENV PATH="/root/.pyenv/bin:/root/.pyenv/shims:${PATH}"
-RUN pyenv install 3.12 && pyenv global 3.12
+RUN pyenv install 3.12.4 && pyenv global 3.12.4
 
 # Actualiza pip y instala Poetry
 RUN pip install --upgrade pip \
@@ -52,7 +49,7 @@ RUN poetry config virtualenvs.create false && poetry install --no-root
 COPY . .
 
 # Ejecuta las tareas específicas de poe, si están definidas en pyproject.toml
-RUN poetry run poe ultralytics
+RUN poetry run poe ultralitycs
 RUN poetry run poe torch
 
 # Expone el puerto necesario (ajusta según sea necesario)
