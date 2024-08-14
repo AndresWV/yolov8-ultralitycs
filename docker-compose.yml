@@ -11,7 +11,7 @@ services:
           devices:
             - capabilities: [gpu]
     volumes:
-      - ./data:/usr/src/app/data  # Monta el directorio de datos
+      - ./data:/usr/src/app/data
     environment:
       - PYTHONUNBUFFERED=1
     command: ["python", "-m", "ultralytics", "predict", "model=yolov8n.pt", "source=path/to/your/image.jpg"]

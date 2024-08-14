@@ -15,10 +15,14 @@ poethepoet = "^0.27.0"
 
 
 [tool.poe.tasks]
-# Tarea para correr el contenedor con todas las GPUs
+ultralitycs = """
+    pip install git+https://github.com/ultralytics/ultralytics.git
+"""
 docker_run_all_gpus = { cmd = "docker run -it --ipc=host --gpus all ultralytics/ultralytics:latest" }
-# Tarea para correr el contenedor especificando GPUs
 docker_run_specific_gpus = { cmd = "docker run -it --ipc=host --gpus '\"device=2,3\"' ultralytics/ultralytics:latest" }
+torch = """
+    pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+"""
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
