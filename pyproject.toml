@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "yolov8-ultralitycs"
+version = "0.1.0"
+description = "Ejemeplo de detección con yolov8."
+authors = ["awallberg <awallberg@entel.cl>"]
+
+[tool.poetry.dependencies]
+python = "^3.12.4" 
+
+[tool.poetry.dev-dependencies]
+pytest = "^7.0.0" 
+
+[tool.poetry.group.dev.dependencies]
+poethepoet = "^0.27.0"
+
+
+[tool.poe.tasks]
+# Tarea para correr el contenedor con todas las GPUs
+docker_run_all_gpus = { cmd = "docker run -it --ipc=host --gpus all ultralytics/ultralytics:latest" }
+# Tarea para correr el contenedor especificando GPUs
+docker_run_specific_gpus = { cmd = "docker run -it --ipc=host --gpus '\"device=2,3\"' ultralytics/ultralytics:latest" }
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
