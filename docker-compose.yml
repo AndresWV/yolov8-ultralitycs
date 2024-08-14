@@ -4,14 +4,13 @@ services:
     build:
       context: . 
       dockerfile: Dockerfile
+    runtime: nvidia
     image: yolov8:latest
     deploy:
       resources:
         reservations:
           devices:
             - capabilities: [gpu]
-    volumes:
-      - ./data:/usr/src/app/data
     environment:
       - PYTHONUNBUFFERED=1
-    command: ["python", "-m", "ultralytics", "predict", "model=yolov8n.pt", "source=path/to/your/image.jpg"]
+      - NVIDIA_VISIBLE_DEVICES=all

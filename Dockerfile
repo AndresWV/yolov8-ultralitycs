@@ -56,4 +56,4 @@ RUN poetry run poe torch
 EXPOSE 8000
 
 # Configura el comando por defecto (ajusta según tu aplicación principal)
-#CMD ["poetry", "run", "tu-comando-principal"]
+CMD ["poetry", "run", "python", "yolov8-ultralitycs/train.py"]
